@@ -136,7 +136,7 @@ df = df.merge(df_cellType, left_index=True, right_index=True, how='left')
 
 ######################################################################
 # to make hamming vs rna charts
-unique_tcrs_list = df_all_tcrs.iloc[:, 0].str.strip().tolist() #CH: debug, should use be consistent with df_all_tcrs but not df_tcr_counts.index.tolist()
+unique_tcrs_list = df_all_tcrs.iloc[:, 0].str.strip().tolist()
 tcrs_id = df['cdr3'].apply(lambda tmp: unique_tcrs_list.index(tmp))
 df_all_tcrs_array_2d = df_all_tcrs_array.argmax(axis=-1) # (num_tcrs, max_seq_len)
 

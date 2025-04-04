@@ -367,14 +367,7 @@ combined_data_labels_tcr = np.concatenate([np.concatenate(all_tcrs[i]) for i in 
 combined_data_labels_tcr_v = np.concatenate([np.concatenate(all_tcr_v[i]) for i in range(len(all_tcr_v))], axis=0)
 combined_data_labels_tcr_j = np.concatenate([np.concatenate(all_tcr_j[i]) for i in range(len(all_tcr_j))], axis=0)
 
-# Note: might need to check with Matt if the following codes are correct, I have to change line 371 to 372/373 otherwise, it gives me error. However, as this processed data is saved, we don't need to worry about this so far.
-# Comment out for now in case we forget to change it back
-# combined_data_labels_treatment = np.take(pd.crosstab(df_blood_metadata['treat'], df_blood_metadata['patient']).T.idxmax(axis=1) - 1, combined_data_labels_patient).values
-# patient_to_treat = pd.crosstab(df_blood_metadata['treat'], df_blood_metadata['patient']).T.idxmax(axis=1) - 1
-# combined_data_labels_treatment = np.take(patient_to_treat.values, combined_data_labels_patient.astype(int))
-
 combined_data_labels_metadata = pd.concat([pd.concat(all_df_metadata[0]), pd.concat(all_df_metadata[1]), pd.concat(all_df_metadata[2]), pd.concat(all_df_metadata[3])], axis=0)
-
 
 combined_data_labels = np.stack([combined_data_labels_bloodtumor,
                                  combined_data_labels_prepost,
@@ -425,7 +418,6 @@ tcrbert_embeddings = np.stack([np.array(o[0])[0] for o in tcrbert_out])
 # # tcrbert_embeddings = np.stack([np.mean(np.array(o[0]), axis=0) for o in tcrbert_out])
 # # tcrbert_embeddings = np.stack([np.mean(np.array(o[0])[1:-1], axis=0) for o in tcrbert_out])
 
-# CH: save tcrbert_embeddings into pickle file
 tcrbert_path = '/home/che/TRIM/tcr-bert'
 with open(os.path.join(tcrbert_path, 'tcrbert_embeddings.pkl'), 'wb') as f:
     pickle.dump(tcrbert_embeddings, f)
@@ -448,21 +440,21 @@ combined_data_tcr = np.take(tcr_embeddings, combined_data_labels[:, col_tcr].ast
 
 
 
-# CH: don't save
-# with open(os.path.join(args.output_folder, 'data_rna.npz'), 'wb+') as f:
-#     np.savez(f, data_rna=combined_data)
 
-# with open(os.path.join(args.output_folder, 'data_labels.npz'), 'wb+') as f:
-#     np.savez(f, data_labels=combined_data_labels)
+with open(os.path.join(args.output_folder, 'data_rna.npz'), 'wb+') as f:
+    np.savez(f, data_rna=combined_data)
+
+with open(os.path.join(args.output_folder, 'data_labels.npz'), 'wb+') as f:
+    np.savez(f, data_labels=combined_data_labels)
     
-# with open(os.path.join(args.output_folder, 'data_tcr.npz'), 'wb+') as f:
-#     np.savez(f, data_tcr=combined_data_tcr)
+with open(os.path.join(args.output_folder, 'data_tcr.npz'), 'wb+') as f:
+    np.savez(f, data_tcr=combined_data_tcr)
 
-# with open(os.path.join(args.output_folder, 'data_all_tcrs.npz'), 'wb+') as f:
-#     np.savez(f, data_all_tcrs=df_all_tcrs.values, rows=df_all_tcrs.index, cols=df_all_tcrs.columns)
+with open(os.path.join(args.output_folder, 'data_all_tcrs.npz'), 'wb+') as f:
+    np.savez(f, data_all_tcrs=df_all_tcrs.values, rows=df_all_tcrs.index, cols=df_all_tcrs.columns)
 
-# with open(os.path.join(args.output_folder, 'combined_data_columns.npz'), 'wb+') as f:
-#     np.savez(f, cols=combined_data.columns)
+with open(os.path.join(args.output_folder, 'combined_data_columns.npz'), 'wb+') as f:
+    np.savez(f, cols=combined_data.columns)
 
 
 

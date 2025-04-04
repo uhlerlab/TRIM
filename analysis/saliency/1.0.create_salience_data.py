@@ -38,10 +38,6 @@ old_fig_size = fig.get_size_inches()
 
 # define the type of DE analysis
 de_type = 'include_emergent_disappear' # include_emergent_disappear, no_emergent_include_disappear, no_emergent_no_disappear
-# note: 
-# include_emergent_disappear: include emergent-expanded TCRs (impacted post-trt DE) and disappeared non-expanded TCRs (impacted pre-trt DE)
-# no_emergent_include_disappear: exclude emergent-expanded TCRs (impacted post-trt DE) but include disappeared non-expanded TCRs (impacted pre-trt DE)
-# no_emergent_no_disappear: exclude emergent-expanded TCRs (impacted post-trt DE) and disappeared non-expanded TCRs (impacted pre-trt DE)
 
 ###############
 ############### START data loading

@@ -96,9 +96,9 @@ if perform_pca:
 
     print('Starting to save...')
     t = time.time()
-    # with open('/data/che/panc/data_pca.npz', 'wb+') as f:
-    #     np.savez(f, df=df_combined.values, df_index=df_combined.index, df_columns=df_combined.columns)
-    # print('{:.1f} s\n'.format(time.time() - t))
+    with open('/data/che/panc/data_pca.npz', 'wb+') as f:
+        np.savez(f, df=df_combined.values, df_index=df_combined.index, df_columns=df_combined.columns)
+    print('{:.1f} s\n'.format(time.time() - t))
 else:
     print('Skipping PCA analyses')
     print('-'*100)
@@ -444,8 +444,8 @@ if train_tcr_ae:
     embeddings_to_save = np.stack(embeddings_to_save)
 
     fn_embeddings = f'{data_path}/trained_tcr_embeddings_ae.npz'
-    # with open(fn_embeddings, 'wb+') as f:
-    #     np.savez(fn_embeddings, embeddings=embeddings_to_save)
+    with open(fn_embeddings, 'wb+') as f:
+        np.savez(fn_embeddings, embeddings=embeddings_to_save)
 else:
     print('Skipping training of TCR autoencoder')
     print('-'*100)
