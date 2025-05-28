@@ -2,8 +2,6 @@
 
 Code for paper: Multimodal framework for the joint analysis of single-cell RNA and T cell receptor sequencing data predicts T cell response to cancer immunotherapy
 
-arXiv link: [to-add]
-
 ## Installation
 
 Follow the two steps illustrated below
