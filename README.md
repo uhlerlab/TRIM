@@ -1,7 +1,7 @@
 # TRIM (TCR-RNA Integrating Model)
 
 Code for paper: Multimodal framework for the joint analysis of single-cell RNA and T cell receptor sequencing data predicts T cell response to cancer immunotherapy
-
+ 
 ## Installation
 
 Follow the two steps illustrated below
