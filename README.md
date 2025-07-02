@@ -1,7 +1,14 @@
 # TRIM (TCR-RNA Integrating Model)
 
 Code for paper: Multimodal framework for the joint analysis of single-cell RNA and T cell receptor sequencing data predicts T cell response to cancer immunotherapy
- 
+
+## System requirements
+The code has been developed and tested on a high-performance computing system running Ubuntu 20.04.4 LTS. The system is equipped with an AMD EPYC 7513 32-Core Processor, 2 TB of RAM, and eight NVIDIA RTX A6000 GPUs (each with 48 GB VRAM), using CUDA version 12.2 and NVIDIA driver version 535.104.12. The demo application of our pipeline can be run on significantly less powerful hardware, requiring:
+- Linux-based system
+- at least 20 GB of free disk space
+- *one GPU*
+- an internet connection 
+
 ## Installation
 
 Follow the two steps illustrated below
