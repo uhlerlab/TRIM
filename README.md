@@ -79,6 +79,7 @@ python trim.py \
 ```
 
 ## Figures in the paper
+This section contains code to reproduce the figures from our paper. However, to run TRIM on a new dataset, please follow the instructions in **Data Format Requirements** and **Quick Start**.
 
 Illustrative figures: made using PowerPoint
 
