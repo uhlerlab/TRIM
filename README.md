@@ -11,41 +11,76 @@ The code has been developed and tested on a high-performance computing system ru
 
 ## Installation
 
-Follow the two steps illustrated below
+### Step 1: Create conda environment
 
-1. create a conda environment using `environment.yaml` (all dependencies are included; whole process takes about 5 min):
+Create a conda environment using `environment.yml` (all dependencies are included; whole process takes about 5 min):
 
-```
+```bash
 conda env create -f environment.yml
+conda activate trim
 ```
 
-2. install the current package in editable mode inside the conda environment:
+### Step 2: Install package
 
-```
+Install the current package in editable mode inside the conda environment:
+
+```bash
 pip install -e .
 ```
 
-## Experiments
-To run the models, please follow these steps:
+## Data Format Requirements
 
-1. Preprocess the RNA-seq and TCR-seq data (see example: `./analysis/HNSCC/data_preprocess/data_processing.py`)
-2. Update the paths in ./run.sh
-3. Execute the script to start the run
+Before running TRIM, you need to prepare your data in the following format:
 
-```
-./run.sh
+### Required Input Files
+
+All data files should be saved as pickle files in your data directory:
+
+1. **`data_rna.pkl`**: NumPy array of shape `(n_cells, n_genes)` containing normalized RNA-seq expression data (see preprocessing example)
+
+2. **`data_labels.pkl`**: Pandas DataFrame with the following required columns:
+   - `Tissue`: Binary indicator (0=blood, 1=tumor)
+   - `Treatment Stage`: Binary indicator (0=pre-treatment, 1=post-treatment)
+   - `Patient`: Patient ID (integer, 0-indexed)
+   - `CDR3(Beta1)`: TCR CDR3 sequence index (integer index into `df_all_tcrs`)
+
+3. **`data_labels_str.pkl`**: Pandas DataFrame with string versions of labels (same structure as `data_labels.pkl`)
+
+4. **`df_all_tcrs.pkl`**: Pandas DataFrame with all unique TCR sequences as index (here, we use CDR3 amino acid sequences from beta chain)
+   - Each row index should be a CDR3 amino acid sequence string
+   - The `CDR3(Beta1)` column in `data_labels.pkl` should contain integer indices (0-indexed) that reference rows in this DataFrame
+
+5. **`data_tcr.pkl`**: NumPy array of shape `(n_cells, dim_tcr)` with learned numeric TCR sequence embeddings for each cell, in the same order as column `CDR3(Beta1)` in `data_labels.pkl`, as produced by running `learn_tcr_embedding.py` (see below).
+
+### Data Preprocessing Example
+
+See `./analysis/HNSCC/data_preprocess/data_processing.py` for a complete example of how to:
+- Load and normalize RNA-seq data
+- Parse TCR sequences from metadata
+- Create the required label DataFrames
+- Format data for TRIM
+
+## Quick Start
+
+For users with preprocessed data, here's a minimal example:
+
+```bash
+# 1. Activate environment
+conda activate trim
+
+# 2. Learn TCR embeddings (update paths in the script first by updating data_path)
+python learn_tcr_embedding.py
+
+# 3. Train TRIM model
+python trim.py \
+    --data_parent_folder /path/to/your/data \
+    --heldout_patient 0 \
+    --device cuda:0
 ```
 
 ## Figures in the paper
 
-Illustraive figures: made using powerpoint
+Illustrative figures: made using PowerPoint
 
-Pointers for nonillustrative figures:
-
-- `./analysis/HNSCC/2.0.eval_data_explore.py`: Fig.3 (a, c, d, e, f, g), Supp Fig.4
-- `./analysis/HNSCC/2.1.eval_rna_pairwise_dist.py`: Fig.3b, Supp Fig.2a
-- `./analysis/HNSCC/2.2.eval_gen.py`: Fig.4, Fig.5a, Supp Fig.5, Supp Fig.7, Supp Fig.8
-- `./analysis/saliency`: Fig.5 (b,c,d), Supp Fig.9
-- `./analysis/pan-cancer/2.1.evaluation.py`: Supp Fig.3c, Supp Fig.6
-- `./analysis/pan-cancer/2.0.eval_rna_pairwise_dist.py`: Supp Fig.3b
+Codes for non-illustrative figures can be found in `./analysis/`
 

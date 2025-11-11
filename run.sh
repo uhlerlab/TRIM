@@ -1,6 +1,6 @@
 for patient in 20
 do
-    output_dir="/data/che/TRIM/HNSCC/output/holdout${patient}"
+    output_dir="your_output_directory/holdout${patient}"
 
     # Create the directory if it doesn't exist
     mkdir -p "${output_dir}"
@@ -9,7 +9,6 @@ do
     python -u trim.py \
         --heldout_patient=${patient} \
         --model_name="holdout${patient}" \
-        --batch_size=4096 \
         > "${output_dir}/training.log"
 
     echo "Training completed for patient ${patient}."
